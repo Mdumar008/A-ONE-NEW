@@ -27,7 +27,7 @@
     </script>
     <style>
         /* Custom font import for Inter */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
@@ -53,6 +53,14 @@
         }
         .float-btn-img:hover {
             transform: scale(1.1);
+        }
+        /* Hide scrollbar for aesthetics, but allow scrolling */
+        body {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        body::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
         }
     </style>
 </head>
@@ -92,44 +100,50 @@
 
     <section id="products" class="py-16 bg-white">
         <div class="container mx-auto px-4">
-            <h1 class="text-4xl sm:text-5xl font-bold text-primary-dark text-center mb-12">Our Product Catalog</h1>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-primary-light rounded-xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-105 border-b-4 border-accent-gold">
-                    <img src="go1.jpg" alt="Product 1" class="w-full h-64 object-cover">
+            <h1 class="text-4xl sm:text-5xl font-bold text-primary-dark text-center mb-8">Our Product Catalog</h1>
+
+            <div class="mb-12 flex justify-center">
+                <input type="text" id="productSearch" placeholder="Search products..." class="w-full max-w-md p-3 border border-gray-300 rounded-md shadow-sm focus:ring-accent-gold focus:border-accent-gold text-text-dark">
+            </div>
+
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <div class="product-card bg-primary-light rounded-xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-105 border-b-4 border-accent-gold">
+                    <img src="go1.jpg" alt="Premium Kitchenware Set" class="w-full h-64 object-cover">
                     <div class="p-6">
-                        <h2 class="text-2xl font-semibold text-primary-dark mb-2">Premium Kitchenware Set</h2>
-                        <p class="text-text-dark text-lg mb-4">Durable and elegantly designed kitchen essentials for modern hospitality.</p>
-                        <span class="text-accent-gold font-bold text-xl">₹9,999</span>
+                        <h2 class="text-2xl font-semibold text-primary-dark mb-2 product-name">Premium Kitchenware Set</h2>
+                        <p class="text-text-dark text-lg mb-4 product-description">Durable and elegantly designed kitchen essentials for modern hospitality.</p>
+                        <span class="text-accent-gold font-bold text-xl product-price">₹9,999</span>
                         <button class="mt-4 w-full bg-primary-dark text-text-light py-2 rounded-md hover:bg-accent-gold transition duration-300 ease-in-out">View Details</button>
                     </div>
                 </div>
-                <div class="bg-primary-light rounded-xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-105 border-b-4 border-accent-gold">
-                    <img src="go2.jpg" alt="Product 2" class="w-full h-64 object-cover">
+                <div class="product-card bg-primary-light rounded-xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-105 border-b-4 border-accent-gold">
+                    <img src="go2.jpg" alt="Luxury Linen Collection" class="w-full h-64 object-cover">
                     <div class="p-6">
-                        <h2 class="text-2xl font-semibold text-primary-dark mb-2">Luxury Linen Collection</h2>
-                        <p class="text-text-dark text-lg mb-4">High-thread-count linens ensuring comfort and style for your guests.</p>
-                        <span class="text-accent-gold font-bold text-xl">₹4,500</span>
+                        <h2 class="text-2xl font-semibold text-primary-dark mb-2 product-name">Luxury Linen Collection</h2>
+                        <p class="text-text-dark text-lg mb-4 product-description">High-thread-count linens ensuring comfort and style for your guests.</p>
+                        <span class="text-accent-gold font-bold text-xl product-price">₹4,500</span>
                         <button class="mt-4 w-full bg-primary-dark text-text-light py-2 rounded-md hover:bg-accent-gold transition duration-300 ease-in-out">View Details</button>
                     </div>
                 </div>
-                <div class="bg-primary-light rounded-xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-105 border-b-4 border-accent-gold">
-                    <img src="go3.jpeg" alt="Product 3" class="w-full h-64 object-cover">
+                <div class="product-card bg-primary-light rounded-xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-105 border-b-4 border-accent-gold">
+                    <img src="go3.jpeg" alt="Guest Room Amenities Pack" class="w-full h-64 object-cover">
                     <div class="p-6">
-                        <h2 class="text-2xl font-semibold text-primary-dark mb-2">Guest Room Amenities Pack</h2>
-                        <p class="text-text-dark text-lg mb-4">Eco-friendly and premium guest amenities for a delightful stay.</p>
-                        <span class="text-accent-gold font-bold text-xl">₹1,200</span>
+                        <h2 class="text-2xl font-semibold text-primary-dark mb-2 product-name">Guest Room Amenities Pack</h2>
+                        <p class="text-text-dark text-lg mb-4 product-description">Eco-friendly and premium guest amenities for a delightful stay.</p>
+                        <span class="text-accent-gold font-bold text-xl product-price">₹1,200</span>
                         <button class="mt-4 w-full bg-primary-dark text-text-light py-2 rounded-md hover:bg-accent-gold transition duration-300 ease-in-out">View Details</button>
                     </div>
                 </div>
-                <div class="bg-primary-light rounded-xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-105 border-b-4 border-accent-gold">
-                    <img src="go4.jpeg" alt="Product 4" class="w-full h-64 object-cover">
+                <div class="product-card bg-primary-light rounded-xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-105 border-b-4 border-accent-gold">
+                    <img src="go4.jpeg" alt="Professional Cleaning Supplies" class="w-full h-64 object-cover">
                     <div class="p-6">
-                        <h2 class="text-2xl font-semibold text-primary-dark mb-2">Professional Cleaning Supplies</h2>
-                        <p class="text-text-dark text-lg mb-4">High-grade cleaning solutions for immaculate hygiene standards.</p>
-                        <span class="text-accent-gold font-bold text-xl">₹2,800</span>
+                        <h2 class="text-2xl font-semibold text-primary-dark mb-2 product-name">Professional Cleaning Supplies</h2>
+                        <p class="text-text-dark text-lg mb-4 product-description">High-grade cleaning solutions for immaculate hygiene standards.</p>
+                        <span class="text-accent-gold font-bold text-xl product-price">₹2,800</span>
                         <button class="mt-4 w-full bg-primary-dark text-text-light py-2 rounded-md hover:bg-accent-gold transition duration-300 ease-in-out">View Details</button>
                     </div>
                 </div>
+                
                 </div>
         </div>
     </section>
@@ -140,6 +154,12 @@
             <div class="flex justify-center space-x-6 mt-4">
                 <a href="#" class="hover:text-accent-gold transition duration-300 ease-in-out">Privacy Policy</a>
                 <a href="#" class="hover:text-accent-gold transition duration-300 ease-in-out">Terms of Service</a>
+                <a href="https://www.instagram.com/CONNECT_AONE/" target="_blank" class="hover:text-accent-gold transition duration-300 ease-in-out">
+                    <svg class="w-6 h-6 inline-block align-middle mr-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12 0C8.74 0 8.333.012 7.053.072 5.772.132 4.903.328 4.028.667 3.149 1.009 2.38 1.488 1.735 2.134.996 2.871.493 3.8.196 4.904.092 5.27.056 5.688.028 7.053.012 7.46.002 8.74 0 12c0 3.26.012 3.667.072 4.947.06 1.281.256 2.15.596 3.028.34 1.079.818 1.841 1.464 2.486.745.746 1.678 1.259 2.721 1.554 1.144.33 1.95.525 3.123.585 1.37.06 1.77.078 4.947.078 3.26 0 3.667-.012 4.947-.072 1.28-.06 2.149-.256 3.028-.596 1.079-.34 1.841-.818 2.486-1.464.746-.745 1.259-1.678 1.554-2.721.33-1.144.525-1.95.585-3.123.06-1.37.078-1.77.078-4.947 0-3.26-.012-3.667-.072-4.947-.06-1.28-.256-2.149-.596-3.028-.34-1.079-.818-1.841-1.464-2.486-.745-.746-1.678-1.259-2.721-1.554-1.144-.33-1.95-.525-3.123-.585C15.667.012 15.26 0 12 0zm0 2.16c3.038 0 3.4.012 4.605.072 1.188.057 1.703.22 2.173.407.592.23.957.51 1.343.896.387.386.666.752.896 1.343.188.47.35.985.407 2.173.06 1.205.072 1.57.072 4.605s-.012 3.4-.072 4.605c-.057 1.188-.22 1.703-.407 2.173-.23.592-.51.957-.896 1.343-.386.387-.752.666-.896 1.343-.188.47-.35-.985-.407-2.173-.06-1.205-.072-1.57-.072-4.605s.012-3.4.072-4.605c.057-1.188.22-1.703.407-2.173.23-.592.51-.957.896-1.343.386-.387-.752-.666.896-1.343.188-.47-.35-.985-.407-2.173-.06-1.205-.072-1.57-.072-4.605zM12 7.72c-2.365 0-4.28 1.916-4.28 4.28S9.635 16.28 12 16.28s4.28-1.916 4.28-4.28-1.916-4.28-4.28-4.28zm0 7.04c-1.578 0-2.855-1.277-2.855-2.855S10.422 9.145 12 9.145s2.855 1.277 2.855 2.855-1.277 2.855-2.855 2.855zm5.3-.984c-.604 0-1.096-.492-1.096-1.096s.492-1.096 1.096-1.096 1.096.492 1.096 1.096-.492 1.096-1.096 1.096z" clip-rule="evenodd"/>
+                    </svg>
+                    Instagram
+                </a>
             </div>
         </div>
     </footer>
@@ -202,6 +222,29 @@
                         top: offsetPosition,
                         behavior: "smooth"
                     });
+                }
+            });
+        });
+
+        // Product Search Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('productSearch');
+            const productGrid = document.getElementById('product-grid');
+            const productCards = productGrid.getElementsByClassName('product-card');
+
+            searchInput.addEventListener('keyup', function() {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                for (let i = 0; i < productCards.length; i++) {
+                    const card = productCards[i];
+                    const productName = card.querySelector('.product-name').textContent.toLowerCase();
+                    const productDescription = card.querySelector('.product-description').textContent.toLowerCase();
+
+                    if (productName.includes(searchTerm) || productDescription.includes(searchTerm)) {
+                        card.style.display = ''; // Show the card
+                    } else {
+                        card.style.display = 'none'; // Hide the card
+                    }
                 }
             });
         });
