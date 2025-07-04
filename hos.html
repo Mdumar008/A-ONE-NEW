@@ -6,6 +6,25 @@
     <title>Aone Hospitality Services - Product Catalog</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    'primary-dark': '#1A2E44', // A deep, professional blue/charcoal
+                    'primary-light': '#F0F4F8', // A very light, almost off-white blue
+                    'accent-gold': '#DAA520', // Goldenrod for a touch of elegance
+                    'accent-light': '#FDF5E6', // Light corn silk for subtle highlights
+                    'text-dark': '#333333',    // Dark grey for main text
+                    'text-light': '#FFFFFF',   // White for text on dark backgrounds
+                },
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'], // Ensure Inter is the primary sans-serif font
+                }
+            }
+        }
+    }
+</script>
     <style>
         /* Custom Tailwind Configuration for Gold color */
         :root {
