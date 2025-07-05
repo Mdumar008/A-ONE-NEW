@@ -3,1794 +3,335 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aone Hospitality Services - Product Catalog</title>
+    <title>Aone Hospitality Services - Hospitality Products</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom Tailwind Configuration for Gold color */
-        :root {
-            --color-gold: #D4AF37; /* A common gold shade */
-        }
-        .text-gold { color: var(--color-gold); }
-        .bg-gold { background-color: var(--color-gold); }
-        .border-gold { border-color: var(--color-gold); }
-
-        /* Inter Font from Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FFFFFF; /* White background for the entire page */
-            color: #1A1A1A; /* Dark text for readability */
-        }
-
-        /* Ensure smooth scrolling behavior */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Custom styles for professional appearance */
-        .header-gradient {
-            background: linear-gradient(to right, #FFFFFF, #F8F8F8);
-        }
-
-        .item-card {
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            height: 100%; /* Ensure cards in a row have similar height */
-            display: flex;
-            flex-direction: column;
-        }
-
-        .item-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .add-to-inquiry-button {
-            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
-            margin-top: auto; /* Push button to bottom */
-        }
-
-        .add-to-inquiry-button:hover {
-            background-color: #B89C2F; /* Slightly darker gold on hover */
-            transform: translateY(-2px);
-        }
-
-        /* Responsive grid for items - Adjusted for 5 in a row on very large screens */
-        .products-grid {
-            display: grid;
-            gap: 1.5rem; /* Gap between cards */
-            grid-template-columns: repeat(1, 1fr); /* Default: 1 column for very small screens */
-        }
-
-        @media (min-width: 500px) { /* Custom breakpoint for slightly wider mobiles/small tablets */
-            .products-grid {
-                grid-template-columns: repeat(2, 1fr); /* 2 columns */
-            }
-        }
-
-        @media (min-width: 768px) { /* md breakpoint: Tablets */
-            .products-grid {
-                grid-template-columns: repeat(3, 1fr); /* 3 columns */
-            }
-        }
-
-        @media (min-width: 1024px) { /* lg breakpoint: Laptops */
-            .products-grid {
-                grid-template-columns: repeat(4, 1fr); /* 4 columns */
-            }
-        }
-
-        @media (min-width: 1280px) { /* xl breakpoint: Desktops */
-            .products-grid {
-                grid-template-columns: repeat(5, 1fr); /* 5 columns from XL upwards */
-            }
-        }
-
-        /* Placeholder image styling */
-        .item-image-placeholder {
-            background-color: #E5E7EB; /* Light grey */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6B7280;
-            font-size: 0.85rem; /* Slightly smaller font for narrower cards */
-            height: 160px; /* Adjusted height for consistency with more columns */
-            object-fit: cover;
-            width: 100%;
-            border-radius: 0.5rem; /* Apply border-radius to placeholder */
-        }
-
-        /* Category Link Styling in Nav */
-        .category-nav-link {
-            @apply px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gold transition-colors duration-200;
-        }
-
-        /* Adjust header padding for sticky nav to avoid overlap */
-        .header-spacer {
-            height: 120px; /* Default for mobile header height */
-            visibility: hidden; /* Keep space but hide content */
-        }
-
-        @media (min-width: 768px) {
-            .header-spacer {
-                height: 100px; /* Adjust for desktop header height */
-            }
-            .category-nav {
-                top: 80px; /* Position below fixed header on desktop */
-            }
-        }
-        @media (min-width: 1024px) {
-             .header-spacer {
-                height: 90px; /* Adjust for larger screens */
-            }
-             .category-nav {
-                top: 80px; /* Position below fixed header */
-            }
-        }
-
-        /* Scrollbar styling for category nav */
-        .category-nav-scroll {
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none;  /* IE and Edge */
-        }
-        .category-nav-scroll::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
-        }
-
-        /* Floating Inquiry Button */
-        .floating-inquiry-button {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            background-color: #25D366; /* WhatsApp green */
-            color: white;
-            padding: 0.75rem 1.25rem;
-            border-radius: 9999px; /* Fully rounded */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            z-index: 50;
-            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
-            font-size: 0.9rem;
-        }
-
-        .floating-inquiry-button:hover {
-            background-color: #1DA851; /* Darker green on hover */
-            transform: translateY(-3px);
-        }
-
-        .inquiry-count {
-            background-color: #D4AF37; /* Gold for count */
-            color: white;
-            border-radius: 50%;
-            padding: 0.2rem 0.5rem;
-            font-size: 0.75rem;
-            font-weight: bold;
-            line-height: 1;
-            min-width: 1.5rem; /* Ensure circular shape */
-            text-align: center;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-        }
-
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background-color: white;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-            position: relative;
-            transform: translateY(20px);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .modal-overlay.show .modal-content {
-            transform: translateY(0);
-        }
-
-        .modal-close-button {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #6B7280;
-        }
-
-        .modal-close-button:hover {
-            color: #1A1A1A;
-        }
-
-        .inquiry-list-ul {
-            list-style: disc;
-            padding-left: 1.5rem;
-            max-height: 60vh; /* Limit height and allow scrolling */
-            overflow-y: auto;
-            border: 1px solid #E5E7EB;
-            border-radius: 0.5rem;
-            padding: 1rem;
-        }
-
-        .inquiry-list-ul li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #F3F4F6;
-        }
-        .inquiry-list-ul li:last-child {
-            border-bottom: none;
-        }
-    </style>
     <script>
-        // Dynamically add a custom gold color to Tailwind's config
+        // Custom Tailwind Configuration for new colors
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        gold: 'var(--color-gold)',
+                        'primary-dark': '#1A2E44',
+                        'primary-light': '#F0F4F8',
+                        'accent-gold': '#DAA520',
+                        'accent-light': '#FDF5E6',
+                        'text-dark': '#333333',
+                        'text-light': '#FFFFFF',
                     },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
                 }
             }
         }
-
-        let inquiryList = []; // Global array to store selected items for inquiry
-        const phoneNumber = '919867531298'; // WhatsApp number with country code
-
-        /**
-         * Updates the counter displayed on the floating inquiry button.
-         */
-        function updateInquiryCounter() {
-            const counterElement = document.getElementById('inquiry-count');
-            if (counterElement) {
-                counterElement.textContent = inquiryList.length;
-                if (inquiryList.length > 0) {
-                    document.getElementById('floating-inquiry-button').classList.remove('hidden');
-                } else {
-                    document.getElementById('floating-inquiry-button').classList.add('hidden');
-                }
-            }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
         }
-
-        /**
-         * Adds an item to the inquiry list.
-         * @param {string} itemName - The name of the item.
-         * @param {string} itemSpec - The specification/brand of the item.
-         */
-        function addToInquiryList(itemName, itemSpec) {
-            inquiryList.push({ name: itemName, spec: itemSpec });
-            updateInquiryCounter();
-            // Optional: Provide visual feedback, e.g., changing button text temporarily
-            // For now, just a console log for debugging
-            console.log(`Added to inquiry list: ${itemName}`);
+        .whatsapp_float {
+            position: fixed;
+            bottom: 40px;
+            right: 20px;
+            z-index: 1000;
         }
-
-        /**
-         * Populates the modal with items from the inquiry list and displays it.
-         */
-        function openInquiryModal() {
-            const modalOverlay = document.getElementById('inquiry-modal-overlay');
-            const inquiryListUl = document.getElementById('modal-inquiry-list');
-            const modalTotalItems = document.getElementById('modal-total-items');
-
-            inquiryListUl.innerHTML = ''; // Clear previous list items
-
-            if (inquiryList.length === 0) {
-                inquiryListUl.innerHTML = '<li class="text-gray-500">Your inquiry list is empty. Add items to request a quotation.</li>';
-                modalTotalItems.textContent = '0 items';
-            } else {
-                inquiryList.forEach((item, index) => {
-                    const listItem = document.createElement('li');
-                    listItem.className = 'text-gray-800';
-                    listItem.innerHTML = `<span class="font-semibold">${item.name}</span> <span class="text-gray-600">(Brand: ${item.spec})</span>`;
-                    inquiryListUl.appendChild(listItem);
-                });
-                modalTotalItems.textContent = `${inquiryList.length} items`;
-            }
-
-            modalOverlay.classList.add('show');
+        .call_float {
+            position: fixed;
+            bottom: 40px;          
+            left: 20px;
+            z-index: 1000;
         }
-
-        /**
-         * Closes the inquiry modal.
-         */
-        function closeInquiryModal() {
-            const modalOverlay = document.getElementById('inquiry-modal-overlay');
-            modalOverlay.classList.remove('show');
+        .float-btn-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
         }
+        .float-btn-img:hover {
+            transform: scale(1.1);
+        }
+        .product-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .search-container {
+            position: sticky;
+            top: 80px;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body class="bg-primary-light text-text-dark font-sans">
+    <div class="whatsapp_float">
+        <a href="https://wa.me/919867531298" target="_blank"><img src='wp.png' class="float-btn-img" alt="WhatsApp"></a>
+    </div>
+    <div class="call_float">
+        <a href="tel:+917387869062" target="_blank"><img src='call.png' class="float-btn-img" alt="Call"></a>
+    </div>
 
-        /**
-         * Generates and opens a WhatsApp message with the current inquiry list.
-         */
-        function sendInquiryViaWhatsApp() {
-            if (inquiryList.length === 0) {
-                // Use a custom message box instead of alert()
-                const messageBox = document.createElement('div');
-                messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-md shadow-lg z-[101]';
-                messageBox.textContent = 'Your inquiry list is empty. Please add items before sending.';
-                document.body.appendChild(messageBox);
-                setTimeout(() => {
-                    messageBox.remove();
-                }, 3000); // Remove message after 3 seconds
+    <header class="bg-primary-dark text-text-light p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-text-light">Aone Hospitality Services</a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="index.html" class="text-text-light hover:text-accent-gold px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out">Home</a>
+                <a href="hos.html" class="text-text-light hover:text-accent-gold px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out">Our Products</a>
+                <a href="about.html" class="text-text-light hover:text-accent-gold px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out">About Us</a>
+                <a href="#contact" class="bg-accent-gold text-text-light hover:bg-primary-dark px-4 py-2 rounded-md font-semibold transition duration-300 ease-in-out">Contact Us</a>
+            </nav>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-text-light focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="md:hidden hidden absolute top-16 left-0 w-full bg-primary-dark shadow-lg py-4 z-50">
+        <a href="index.html" class="block px-4 py-2 text-text-light hover:bg-accent-gold transition duration-300 ease-in-out">Home</a>
+        <a href="hos.html" class="block px-4 py-2 text-text-light hover:bg-accent-gold transition duration-300 ease-in-out">Our Products</a>
+        <a href="about.html" class="block px-4 py-2 text-text-light hover:bg-accent-gold transition duration-300 ease-in-out">About Us</a>
+        <a href="#contact" class="block px-4 py-2 text-text-light hover:bg-accent-gold transition duration-300 ease-in-out">Contact Us</a>
+    </div>
+
+    <section class="relative bg-cover bg-center py-24 text-center" style="background-image: url('all products.jpg');">
+        <div class="absolute inset-0 bg-primary-dark opacity-70"></div>
+        <div class="relative z-10 text-text-light">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">Hospitality <span class="text-accent-gold">Products</span></h1>
+            <p class="text-lg sm:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto">Premium cleaning materials and hospitality supplies for your business needs.</p>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <div class="search-container py-6">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        id="product-search" 
+                        placeholder="Search products by name or specification..." 
+                        class="w-full px-6 py-4 pl-12 text-lg border-2 border-accent-gold rounded-full focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent shadow-lg"
+                    >
+                    <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <div class="mt-4 text-center">
+                    <span id="search-results-count" class="text-text-dark font-medium"></span>
+                    <button id="clear-search" class="ml-4 text-accent-gold hover:text-primary-dark font-medium hidden">Clear Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl sm:text-4xl font-bold text-primary-dark text-center mb-12">Our Hospitality Products</h2>
+            
+            <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+
+            <div id="no-results" class="hidden text-center py-16">
+                <div class="text-6xl mb-4">🔍</div>
+                <h3 class="text-2xl font-bold text-text-dark mb-2">No products found</h3>
+                <p class="text-text-dark">Try adjusting your search terms or browse all products.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="bg-primary-dark text-text-light py-16 text-center">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-6">Ready to Experience the <span class="text-accent-gold">Aone Hospitality Services</span> Difference?</h2>
+            <p class="text-lg sm:text-xl max-w-2xl mx-auto mb-10 opacity-90">
+                Get in touch with us today to learn more about our products or to place an order.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="mailto:aonehospitalitys@gmail.com" class="inline-flex items-center justify-center bg-accent-gold text-text-light font-bold py-3 px-8 rounded-full shadow-lg hover:bg-primary-light hover:text-primary-dark transition duration-300 transform hover:scale-105">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    Email Us
+                </a>
+                <a href="https://wa.me/919867531298" class="inline-flex items-center justify-center border-2 border-accent-gold text-accent-gold font-bold py-3 px-8 rounded-full shadow-lg hover:bg-accent-gold hover:text-text-light transition duration-300 transform hover:scale-105">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    WhatsApp Us
+                </a>
+                <a href="tel:+917387869062" class="inline-flex items-center justify-center border-2 border-accent-gold text-accent-gold font-bold py-3 px-8 rounded-full shadow-lg hover:bg-accent-gold hover:text-text-light transition duration-300 transform hover:scale-105">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.95-3.95A19.79 19.79 0 0 1 2.05 4.18 2 2 0 0 1 4.05 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                    Call Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-primary-dark text-text-light py-8 text-center">
+        <div class="container mx-auto px-4">
+            <p>&copy; 2023 Aone Hospitality Services. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="#" class="hover:text-accent-gold transition duration-300 ease-in-out">Privacy Policy</a>
+                <a href="#" class="hover:text-accent-gold transition duration-300 ease-in-out">Terms of Service</a>
+                <a href="https://www.instagram.com/CONNECT_AONE/" target="_blank" class="hover:text-accent-gold transition duration-300 ease-in-out">
+                    <svg class="w-6 h-6 inline-block align-middle mr-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12 0C8.74 0 8.333.012 7.053.072 5.772.132 4.903.328 4.028.667 3.149 1.009 2.38 1.488 1.735 2.134.996 2.871.493 3.8.196 4.904.092 5.27.056 5.688.028 7.053.012 7.46.002 8.74 0 12c0 3.26.012 3.667.072 4.947.06 1.281.256 2.15.596 3.028.34 1.079.818 1.841 1.464 2.486.745.746 1.678 1.259 2.721 1.554 1.144.33 1.95.525 3.123.585 1.37.06 1.77.078 4.947.078 3.26 0 3.667-.012 4.947-.072 1.28-.06 2.149-.256 3.028-.596 1.079-.34 1.841-.818 2.486-1.464.746-.745 1.259-1.678 1.554-2.721.33-1.144.525-1.95.585-3.123.06-1.37.078-1.77.078-4.947 0-3.26-.012-3.667-.072-4.947-.06-1.28-.256-2.149-.596-3.028-.34-1.079-.818-1.841-1.464-2.486-.745-.746-1.678-1.259-2.721-1.554-1.144-.33-1.95-.525-3.123-.585C15.667.012 15.26 0 12 0zm0 2.16c3.038 0 3.4.012 4.605.072 1.188.057 1.703.22 2.173.407.592.23.957.51 1.343.896.387.386.666.752.896 1.343.188.47.35.985.407 2.173.06 1.205.072 1.57.072 4.605s-.012 3.4-.072 4.605c-.057 1.188-.22 1.703-.407 2.173-.23.592-.51.957-.896 1.343-.386.387-.752.666-1.343.896-.47.188-.985.35-2.173.407-1.205.06-1.57.072-4.605.072s-3.4-.012-4.605-.072c-1.188-.057-1.703-.22-2.173-.407-.592-.23-.957-.51-1.343-.896-.387-.386-.666-.752-.896-1.343-.188-.47-.35-.985-.407-2.173-.06-1.205-.072-1.57-.072-4.605s.012-3.4.072-4.605c.057-1.188.22-1.703.407-2.173.23-.592.51-.957.896-1.343.386-.387.752-.666 1.343-.896.47-.188.985-.35 2.173-.407 1.205-.06 1.57-.072 4.605-.072z" clip-rule="evenodd"/>
+                    </svg>
+                    Instagram
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <button id="back-to-top" class="fixed bottom-20 right-6 bg-primary-dark text-text-light p-3 rounded-full shadow-lg hover:bg-accent-gold focus:outline-none transition duration-300 ease-in-out z-10">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
+    <script>
+        // Sample hospitality products data
+        const hospitalityProducts = [
+            { id: 1, name: "Toilet Paper Roll", spec: "Premium quality, 2-ply, 200 sheets per roll", category: "Bathroom Supplies" },
+            { id: 2, name: "Hand Towels", spec: "100% cotton, ultra-absorbent, 16x24 inches", category: "Linens" },
+            { id: 3, name: "Liquid Hand Soap", spec: "Antibacterial, moisturizing formula, 500ml", category: "Hygiene" },
+            { id: 4, name: "Floor Cleaner", spec: "Multi-surface, pine scent, 1 liter", category: "Cleaning" },
+            { id: 5, name: "Bed Sheets", spec: "Egyptian cotton, 300 thread count, queen size", category: "Linens" },
+            { id: 6, name: "Vacuum Cleaner", spec: "Commercial grade, HEPA filter, 1200W", category: "Equipment" },
+            { id: 7, name: "Disinfectant Spray", spec: "99.9% germ kill, hospital grade, 750ml", category: "Hygiene" },
+            { id: 8, name: "Laundry Detergent", spec: "Concentrated formula, fresh scent, 5kg", category: "Cleaning" },
+            { id: 9, name: "Pillow Cases", spec: "Hypoallergenic, wrinkle-resistant, standard size", category: "Linens" },
+            { id: 10, name: "Glass Cleaner", spec: "Streak-free formula, ammonia-free, 500ml", category: "Cleaning" },
+            { id: 11, name: "Bath Towels", spec: "Turkish cotton, 600 GSM, 27x54 inches", category: "Linens" },
+            { id: 12, name: "Toilet Brush", spec: "Ergonomic handle, replaceable head", category: "Bathroom Supplies" },
+            { id: 13, name: "Air Freshener", spec: "Long-lasting, lavender scent, 300ml", category: "Hygiene" },
+            { id: 14, name: "Mop and Bucket", spec: "Microfiber mop, self-wringing bucket", category: "Cleaning" },
+            { id: 15, name: "Shower Curtain", spec: "Waterproof, mildew-resistant, 72x72 inches", category: "Bathroom Supplies" }
+        ];
+
+        let filteredProducts = [...hospitalityProducts];
+
+        // Function to render products
+        function renderProducts(products) {
+            const grid = document.getElementById('products-grid');
+            const noResults = document.getElementById('no-results');
+            
+            if (products.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
                 return;
             }
+            
+            noResults.classList.add('hidden');
+            
+            grid.innerHTML = products.map(product => `
+                <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden border-b-4 border-accent-gold">
+                    <div class="h-48 bg-gray-200 flex items-center justify-center">
+                        <img src="https://images.pexels.com/photos/4239146/pexels-photo-4239146.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop" 
+                             alt="${product.name}" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-2">
+                            <span class="inline-block bg-accent-light text-accent-gold text-xs px-2 py-1 rounded-full font-semibold">
+                                ${product.category}
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary-dark mb-2">${product.name}</h3>
+                        <p class="text-text-dark mb-4">${product.spec}</p>
+                        <button onclick="inquireProduct('${product.name}', '${product.spec}')" 
+                                class="w-full bg-accent-gold text-text-light font-bold py-2 px-4 rounded-lg hover:bg-primary-dark transition duration-300 ease-in-out">
+                            Inquire Now
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-            let message = "Hello Aone Hospitality Services, I would like to inquire about the following items:\n\n";
-            inquiryList.forEach((item, index) => {
-                message += `${index + 1}. ${item.name} (Brand: ${item.spec})\n`;
-            });
-            message += "\nThank you!";
+        // Function to filter products
+        function filterProducts(searchTerm) {
+            if (!searchTerm.trim()) {
+                filteredProducts = [...hospitalityProducts];
+            } else {
+                filteredProducts = hospitalityProducts.filter(product => 
+                    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    product.spec.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    product.category.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+            
+            renderProducts(filteredProducts);
+            updateSearchResults(searchTerm);
+        }
 
+        // Function to update search results count
+        function updateSearchResults(searchTerm) {
+            const countElement = document.getElementById('search-results-count');
+            const clearButton = document.getElementById('clear-search');
+            
+            if (searchTerm.trim()) {
+                countElement.textContent = `Found ${filteredProducts.length} product${filteredProducts.length !== 1 ? 's' : ''} for "${searchTerm}"`;
+                clearButton.classList.remove('hidden');
+            } else {
+                countElement.textContent = `Showing all ${hospitalityProducts.length} products`;
+                clearButton.classList.add('hidden');
+            }
+        }
+
+        // Function to inquire about a product
+        function inquireProduct(name, spec) {
+            const phoneNumber = '919867531298';
+            const message = `Hello Aone Hospitality Services, I am interested in:\n\nProduct: ${name}\nSpecification: ${spec}\n\nPlease provide more details and pricing.`;
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
-
-            clearInquiryList(); // Clear the list after sending
-            closeInquiryModal(); // Close modal after sending
         }
 
-        /**
-         * Clears the entire inquiry list.
-         */
-        function clearInquiryList() {
-            inquiryList = [];
-            updateInquiryCounter();
-            const inquiryListUl = document.getElementById('modal-inquiry-list');
-            inquiryListUl.innerHTML = '<li class="text-gray-500">Your inquiry list is empty. Add items to request a quotation.</li>';
-            document.getElementById('modal-total-items').textContent = '0 items';
-        }
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts(hospitalityProducts);
+            updateSearchResults('');
 
+            // Search functionality
+            const searchInput = document.getElementById('product-search');
+            const clearButton = document.getElementById('clear-search');
 
-        const categories = [
-    {
-        "name": "Paper & Tissue Products",
-        "id": "paper-tissue",
-        "products": [
-            {
-                "name": "5855 TWL SCOTT COMPACT WHT 110X16 (C Fold 110 Sheets Per Pkt), 1 Box = 16 PKT",
-                "spec": "KIMBERLY",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "12388 TWL SCOTT SLIMROLL 176MX6 (HRT 176 Meter Per Roll), 1 Box = 6 Roll",
-                "spec": "KIMBERLY",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "02410054 HRT White 200mm 165 Mtrs (1 Case = 8 Roll) Greenlime Pudumjee",
-                "spec": "PUDUMJEE",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "30896 HR/TWL KIMSOFT CSR 165M (1 Case = 9 Roll)",
-                "spec": "KIMBERLY",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "04001 KIMSOFT BATHROOM TISSUE-375 S (1 Case = 80 Roll & 1 Roll = 375 Sheets)",
-                "spec": "KIMBERLY",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Toilet Roll 100 GM",
-                "spec": "PUDUMJEE",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "BTR 450 sheet, 10 x 11cm, 2 Ply, 18GSM- Greenlime Pudumjee Product Code: 04410087T (1 Case 100 Rolls)",
-                "spec": "PUDUMJEE",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Green Lime Toilet Rolls 200 Grams (Greenlime Btr 200Grm (With Core) 1011Cm, 2Ply 18Gsm)-1 Box 100/60 Roll",
-                "spec": "PUDUMJEE",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "M-Fold White 21 x 22.5, 150 Sheets, Greenlime Pudumjee Product Code: 01410057 (1 Case = 60 Pkts x 150 Pulls / Sheets)",
-                "spec": "PUDUMJEE",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "JRT Dispenser Roll Greenlime 250Mtr (Greenlime Jrt, White 3.8\"(97Mm) 250Mtr 1 Nos (24Cc) 36Gsm)",
-                "spec": "PUDUMJEE",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Greenlime Facial Tissue 100 Pulls (Greenlime Ft Box, Plain 20X20, Ply 100 Pulls 1 Nos (80Cc) 15Gsm)",
-                "spec": "PUDUMJEE",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Cube Napkin, 1 Ply, CB001, 21cm x 27cm, 1 Box 100 Pkts",
-                "spec": "Saraya Mystair",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Dispensor Jumbo Roll Scott Kimberly",
-                "spec": "KIMBERLY",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            }
-        ]
-    },
-    {
-        "name": "Cleaning Materials",
-        "id": "cleaning-materials",
-        "products": [
-            {
-                "name": "Scott Lux Foam Soap Refill - 30895, For Hand Wash - Kimberly Clark) 1Box = 6 Btl of 1 Ltrs)",
-                "spec": "KIMBERLY",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "30912 Kimberly Clark Scott Instant Hand Sanitizer - 5 Ltrs Can (1 Case = 4 Can)",
-                "spec": "KIMBERLY",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Hand Sanitizer Buzil Rossari Liquid - 5 Ltrs Can, Ethanol Base",
-                "spec": "Buzil Rossari",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "01267 KIMBERLY-CLARK PROF GENTLE CLEAN (1 Box = 2 Can / 5 Ltr)",
-                "spec": "KIMBERLY",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Greenlime/Jade Air Freshner Refill 10MI (Greenlime 70Grm/100 MI)",
-                "spec": "PUDUMJEE / JADE",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Micromist Refill 100ml",
-                "spec": "Mystair",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Hygiene Fresh Micromist Dispenser",
-                "spec": "Hygiene Fresh",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Hygiene Fresh Refill 200ml",
-                "spec": "Hygiene Fresh",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Godrej Aer Pocket Air Fragrance 10Gm",
-                "spec": "Godrej",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Odonil Room Freshner 50gm",
-                "spec": "Dabour/Good Home Scenton",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Room Freshner Bottle 217ml",
-                "spec": "Premium / Lia",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Room Freshener Ambi Pur 275Grm",
-                "spec": "Ambi Pur",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Reva Sense Room Freshener 5 Ltrs Pack",
-                "spec": "Reva Sense",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Fresh Think Room Freshener 300 ml",
-                "spec": "Fresh Think",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Cosmella Room Freshener 310 ml",
-                "spec": "Cosmella",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Ambipure Room Freshener 275 gm",
-                "spec": "Ambipure",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Hygiene Fresh Air Freshener 300 ml",
-                "spec": "Hygiene Fresh",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Pour Home Room Freshener 270 ml",
-                "spec": "Pour Home",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Lia Room Freshener 140gm",
-                "spec": "Lia",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Odonil Room Freshener 240ml",
-                "spec": "Dabur",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Godrej Room Freshener",
-                "spec": "Godrej",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Dettol Liquid Handwash - 5 Ltrs Pack",
-                "spec": "Reckitt Benckiser",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Lifebuoy Handwash - 5 Ltrs Pack",
-                "spec": "Hindustan Unilever",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Savlon Handwash - 5 Ltrs Pack",
-                "spec": "Reckitt Benckiser",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Origami Handwash 5 Ltrs Refill / Pouch",
-                "spec": "Origami",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Nerokem Glanz Pink - 5 Ltrs Can",
-                "spec": "Nerokem",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Cotton Floor Dusters / Rough Duster (Good Quality 24\" X 24\")",
-                "spec": "Good Quality 24\" X 24\"",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Cotton Floor Dusters / Rough Duster (Good Quality 20\" X 20\")",
-                "spec": "Good Quality 20\" X 20\"",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Micro Wipe (40 Cm X 40 Cm) Light Duty",
-                "spec": "China Brand",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Micro Wipe (40 Cm X 40 Cm) 200 Light Duty",
-                "spec": "Unger Brand",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Micro Wipe (40 Cm X 40 Cm) 500 Medium Duty",
-                "spec": "Unger Brand",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Diversey Micro Fiber Cloth",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "White Duster",
-                "spec": "Good Quality",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Disposable Mask 2 Ply / 3 Ply",
-                "spec": "Disposable Mask",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Hand Gloves (Green/Blue/Orange)",
-                "spec": "Victor/Senstouch",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Hand Gloves Cotton",
-                "spec": "Hossiery Cloth",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Round Wet Mop Set With M.S. / Wooden Stick",
-                "spec": "Good Quality",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Hard T Brush Set",
-                "spec": "Gala/Gebi/Vigo / Amco",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Floor Scrubbing Brush 12\" Hard",
-                "spec": "Generic",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Hard Brush Set 2X18\"",
-                "spec": "Alluminium Brush",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Mr. Tall Brush with Metal Stick",
-                "spec": "Local",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Carpet Brush Prince Hard / soft",
-                "spec": "Good Quaity",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Hocky Brush / Round Toilet Brush",
-                "spec": "Hocky Brush For Toilet",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Corner Brush",
-                "spec": "Hand Corner Brush",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "S-SQUEGEE, 35 cm, SH35H",
-                "spec": "Unger Brand",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Dry Mop Set White 18\" Taj",
-                "spec": "Taj Brand",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Dry Mop Refill White 2 Ft Taj",
-                "spec": "Taj Brand",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Acrylic Dry Mop Blue 24\"(Bracket & Refill)",
-                "spec": "Generic",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Wet Mop Reffile Cotton Grey 350 gm (Grey)",
-                "spec": "Quality Hygiene",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Wet Mop Reffile Cotton 400 gm (White)",
-                "spec": "Quality Hygiene",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Wet Mop Reffile Cotton 350 gm (Red/Green/Yellow/Blue)",
-                "spec": "Quality Hygiene",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Wet Mop Set Cotton With Mild Steel Stick (Red/Green/Yellow/Blue)",
-                "spec": "Quality Hygiene",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Wet Mop Bracket (Red/Green/Yellow/Blue)",
-                "spec": "Quality Hygiene",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Wet Mop Bracket Heavy Duty (Black / Grey)",
-                "spec": "Gala",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Wheel Dust Bin 260 Ltr H.D. Brand- Aristo",
-                "spec": "Red/Green/Yellow/ Blue Colour",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Plastic Big Dust Bin / Drum 100 Ltr With Flat Flap/LID",
-                "spec": "Red/Green/Yellow/ Blue Colour",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Pawan/Milan Dust Bin With Flap Capacity 80 Ltr",
-                "spec": "Red/Green/Yellow/ Blue Colour",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Pawan/Milan Dust Bin / Drum With Flap / LID Capacity 50 Ltr",
-                "spec": "Red/Green/Yellow/ Blue Colour",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "50 Micron Biodegradable Green Garbage Bag Size : 30 X 50",
-                "spec": "Virgine Green Certified",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Garbage Bag Bio Green print 40X50 51 Micron",
-                "spec": "Toja / Recycle",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Garbage Bag Bio Green print 25X30 51Micron",
-                "spec": "Toja / Recycle",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Garbage Bag Bio Green print 30X50 51 Micron",
-                "spec": "Toja / Recycle",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Oxo Bio Degradable Bags 19*21 (1 Pkt = 30 Pcs)",
-                "spec": "OXO Certified",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Green Phenyle - Concentrated 1 Ltr",
-                "spec": "Generic",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Green Phenyl - Concentrated 5 Ltrs Pack",
-                "spec": "Home Fresh",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "R1 Taski (Batharoom Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Neronex Tc Mild (Nerokem Batharoom Cleaner) 5 Ltr Can",
-                "spec": "Nerokem",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "R2 Taski (Hard Surface Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Insteen Nfc Nerokem (Glass Cleaner) 5 Ltr Can",
-                "spec": "Nerokem",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R3 (Glass Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "R4 Taski (Furniture Polish) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R5 (Air Freshner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "R6 Taski (Toilet Bowl Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "R7 Taski (Floor Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R8 (Wood Polish) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R9 (Bathroom Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski T30 (Floor Cleaner) 5 Ltrs Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Degreaser 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski All in one cleaner 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Jif Lemon 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Spiral 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Bac 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Break Up 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Force 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Grill 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Rinse 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Star 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Tab 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Wax 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Ultra 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Forte 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Extend 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Quick Dry 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Special 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Shine 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Sanitizer 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Kitchen Pro 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Multi 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Crystal 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Rinse Aid 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Oven Cleaner 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Des 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Scale 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Grill D9 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Rinse A5 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Star D1 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Det D10 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Inox D7 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Calc D5 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Degreaser D9 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Grill D9 2 Ltrs Bottle",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Rinse A5 2 Ltrs Bottle",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Star D1 2 Ltrs Bottle",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Det D10 2 Ltrs Bottle",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Inox D7 2 Ltrs Bottle",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Calc D5 2 Ltrs Bottle",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Suma Degreaser D9 2 Ltrs Bottle",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R10 (Floor Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R11 (Carpet Shampoo) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R12 (Heavy Duty Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R13 (Neutral Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R14 (Degreaser) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R15 (Glass Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R16 (Air Freshener) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R17 (Toilet Bowl Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R18 (Floor Maintainer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R19 (All Purpose Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R20 (Disinfectant Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R21 (Sanitizer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R22 (Floor Stripper) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R23 (Floor Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R24 (Floor Finish) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R25 (Floor Polish) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R26 (Floor Cleaner Wax) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R27 (Floor Cleaner Neutral) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R28 (Floor Cleaner Degreaser) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R29 (Floor Cleaner Disinfectant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R30 (Floor Cleaner Sanitizer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R31 (Floor Cleaner Concentrate) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R32 (Floor Cleaner Wax Stripper) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R33 (Floor Cleaner Heavy Duty) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R34 (Floor Cleaner Neutralizer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R35 (Floor Cleaner Deodorizer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R36 (Floor Cleaner Rust Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R37 (Floor Cleaner Grout Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R38 (Floor Cleaner Stone Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R39 (Floor Cleaner Tile Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R40 (Floor Cleaner Wood Floor Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R41 (Floor Cleaner Laminate Floor Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R42 (Floor Cleaner Vinyl Floor Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R43 (Floor Cleaner Linoleum Floor Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R44 (Floor Cleaner Rubber Floor Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R45 (Floor Cleaner Concrete Floor Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R46 (Floor Cleaner Terrazzo Floor Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R47 (Floor Cleaner Marble Floor Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R48 (Floor Cleaner Granite Floor Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R49 (Floor Cleaner Slate Floor Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R50 (Floor Cleaner Travertine Floor Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R51 (Floor Cleaner Quarry Tile Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R52 (Floor Cleaner Ceramic Tile Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R53 (Floor Cleaner Porcelain Tile Cleaner) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R54 (Floor Cleaner Grout Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R55 (Floor Cleaner Tile Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R56 (Floor Cleaner Stone Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R57 (Floor Cleaner Wood Floor Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R58 (Floor Cleaner Laminate Floor Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R59 (Floor Cleaner Vinyl Floor Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R60 (Floor Cleaner Linoleum Floor Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R61 (Floor Cleaner Rubber Floor Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R62 (Floor Cleaner Concrete Floor Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R63 (Floor Cleaner Terrazzo Floor Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R64 (Floor Cleaner Marble Floor Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R65 (Floor Cleaner Granite Floor Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R66 (Floor Cleaner Slate Floor Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R67 (Floor Cleaner Travertine Floor Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R68 (Floor Cleaner Quarry Tile Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R69 (Floor Cleaner Ceramic Tile Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R70 (Floor Cleaner Porcelain Tile Sealer) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R71 (Floor Cleaner Grout Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R72 (Floor Cleaner Tile Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R73 (Floor Cleaner Stone Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R74 (Floor Cleaner Wood Floor Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R75 (Floor Cleaner Laminate Floor Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R76 (Floor Cleaner Vinyl Floor Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R77 (Floor Cleaner Linoleum Floor Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R78 (Floor Cleaner Rubber Floor Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R79 (Floor Cleaner Concrete Floor Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R80 (Floor Cleaner Terrazzo Floor Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R81 (Floor Cleaner Marble Floor Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R82 (Floor Cleaner Granite Floor Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R83 (Floor Cleaner Slate Floor Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R84 (Floor Cleaner Travertine Floor Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R85 (Floor Cleaner Quarry Tile Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R86 (Floor Cleaner Ceramic Tile Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R87 (Floor Cleaner Porcelain Tile Refresher) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R88 (Floor Cleaner Grout Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R89 (Floor Cleaner Tile Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R90 (Floor Cleaner Stone Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R91 (Floor Cleaner Wood Floor Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R92 (Floor Cleaner Laminate Floor Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R93 (Floor Cleaner Vinyl Floor Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R94 (Floor Cleaner Linoleum Floor Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R95 (Floor Cleaner Rubber Floor Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R96 (Floor Cleaner Concrete Floor Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R97 (Floor Cleaner Terrazzo Floor Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R98 (Floor Cleaner Marble Floor Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R99 (Floor Cleaner Granite Floor Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R100 (Floor Cleaner Slate Floor Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R101 (Floor Cleaner Travertine Floor Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R102 (Floor Cleaner Quarry Tile Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R103 (Floor Cleaner Ceramic Tile Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R104 (Floor Cleaner Porcelain Tile Colorant) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R105 (Floor Cleaner Grout Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R106 (Floor Cleaner Tile Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R107 (Floor Cleaner Stone Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R108 (Floor Cleaner Wood Floor Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R109 (Floor Cleaner Laminate Floor Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R110 (Floor Cleaner Vinyl Floor Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R111 (Floor Cleaner Linoleum Floor Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R112 (Floor Cleaner Rubber Floor Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R113 (Floor Cleaner Concrete Floor Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R114 (Floor Cleaner Terrazzo Floor Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R115 (Floor Cleaner Marble Floor Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R116 (Floor Cleaner Granite Floor Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R117 (Floor Cleaner Slate Floor Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R118 (Floor Cleaner Travertine Floor Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R119 (Floor Cleaner Quarry Tile Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R120 (Floor Cleaner Ceramic Tile Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski R121 (Floor Cleaner Porcelain Tile Haze Remover) 5 Ltr Can",
-                "spec": "Taski",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski TR 101 Carpet & Upholstery Cleaner 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski TR 103 Carpet Detergent 5 Ltrs Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski Emeral Plus 200 Ml Bottle",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Taski TERRANOVA 5 Ltr Can",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "TASKI NOBILE PLUS - 1 Kgs Pack",
-                "spec": "Diversey",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Everbrite Plus BL (1 CAN = 5 LTRS) Cleaner- Disinfectant- Sanitizer- Deodorizer- fungicide- virucide. Best for cleaning, disinfecting and sanitizing any surface where plain water can be used. Very helpful in preventing the spread of COVID 19. Dilution 1:20",
-                "spec": "NCH",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Urinal Screen with enzeme block",
-                "spec": "With enzeme block",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Drainex Powder 50gm",
-                "spec": "Kiwi / Good Home",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Frinz Auto - Automatic Dish Wash - 30 ltr Pack",
-                "spec": "Nerokem",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Shoe Polish Brush.",
-                "spec": "Tigar Brand",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Shoe Polish Brown & Black 15gm",
-                "spec": "Kiwi / Cherry",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Spray Bottle 750 MI",
-                "spec": "750 MI",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Spray Bottle 2 Ltrs Capacity",
-                "spec": "",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Spray Gun",
-                "spec": "",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Lobby Dust Pan With Broom",
-                "spec": "Imported",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Single Disk Machine",
-                "spec": "Charnock",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Vacuum Machine (30 Ltr Capacity)",
-                "spec": "",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Black Stripper Pad 17 Inch 3M",
-                "spec": "3M / Northern",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Red Buffer Pad 17 Inch 3M",
-                "spec": "3M / Northern",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            }
-        ]
-    },
-    {
-        "name": "Stationery",
-        "id": "stationery",
-        "products": [
-            {
-                "name": "Ballpoint Pen (Blue)",
-                "spec": "Reynolds",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "A4 Notebook (100 Pages)",
-                "spec": "Classmate",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Stapler (Medium)",
-                "spec": "Kangaro",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Correction Fluid",
-                "spec": "Kores",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            },
-            {
-                "name": "Highlighter Set (Assorted Colors)",
-                "spec": "Stabilo",
-                "image": "https://placehold.co/160x160/E5E7EB/6B7280?text=Item+Image"
-            }
-        ]
-    }
-];
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const productsContainer = document.getElementById('products-container');
-            const categoryNav = document.getElementById('category-nav');
-            const searchInput = document.getElementById('search-input');
-
-            // Function to render products based on search term
-            function renderProducts(searchTerm = '') {
-                productsContainer.innerHTML = ''; // Clear existing products
-                const lowerCaseSearchTerm = searchTerm.toLowerCase();
-
-                categories.forEach(category => {
-                    const categorySection = document.createElement('section');
-                    categorySection.id = category.id;
-                    categorySection.className = 'py-8';
-                    categorySection.innerHTML = `
-                        <h2 class="text-3xl font-bold text-gray-800 mb-6 border-b-2 border-gold pb-2">${category.name}</h2>
-                        <div class="products-grid" id="grid-${category.id}"></div>
-                    `;
-                    productsContainer.appendChild(categorySection);
-
-                    const currentCategoryGrid = document.getElementById(`grid-${category.id}`);
-
-                    const filteredProducts = category.products.filter(item =>
-                        item.name.toLowerCase().includes(lowerCaseSearchTerm) ||
-                        item.spec.toLowerCase().includes(lowerCaseSearchTerm)
-                    );
-
-                    if (filteredProducts.length > 0) {
-                        filteredProducts.forEach(item => {
-                            const sanitizedName = item.name.replace(/'/g, "\\'");
-                            const sanitizedSpec = item.spec.replace(/'/g, "\\'");
-                            const itemCard = `
-                                <div class="item-card bg-white rounded-lg p-4 flex flex-col items-center text-center">
-                                    <img src="${item.image}" alt="${item.name}" class="w-full h-40 object-contain mb-4 rounded-md">
-                                    <h3 class="text-md font-semibold text-gray-800 mb-2">${item.name}</h3>
-                                    <p class="text-gray-600 text-sm mb-4 flex-grow">Brand: ${item.spec}</p>
-                                    <button onclick="addToInquiryList('${sanitizedName}', '${sanitizedSpec}')" class="add-to-inquiry-button bg-gold text-white font-bold py-2 px-6 rounded-full shadow-md hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 ease-in-out text-sm w-full">
-                                        Add to Inquiry
-                                    </button>
-                                </div>
-                            `;
-                            currentCategoryGrid.innerHTML += itemCard;
-                        });
-                    } else {
-                        // If no products match the search term in this category, hide the category heading and grid
-                        categorySection.style.display = 'none';
-                    }
-                });
-            }
-
-            // Initial render of all products
-            renderProducts();
-
-            // Event listener for search input
-            searchInput.addEventListener('input', (e) => {
-                renderProducts(e.target.value);
+            searchInput.addEventListener('input', function() {
+                filterProducts(this.value);
             });
 
-            // Populate category navigation
-            categories.forEach(category => {
-                const navLink = document.createElement('a');
-                navLink.href = `#${category.id}`;
-                navLink.className = 'category-nav-link';
-                navLink.textContent = category.name;
-                categoryNav.appendChild(navLink);
+            clearButton.addEventListener('click', function() {
+                searchInput.value = '';
+                filterProducts('');
+                searchInput.focus();
             });
 
-            // Back to Top Button functionality
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Back to top button functionality
             const backToTopButton = document.getElementById('back-to-top');
+
             window.onscroll = function() {
-                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
                     backToTopButton.classList.remove('hidden');
                 } else {
                     backToTopButton.classList.add('hidden');
@@ -1812,8 +353,13 @@
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
 
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+
                     if (targetElement) {
-                        const headerOffset = 100; // Approximate height of the fixed header and category nav
+                        const headerOffset = 64;
                         const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
                         const offsetPosition = elementPosition - headerOffset;
 
@@ -1824,15 +370,7 @@
                     }
                 });
             });
-
-            // Inquiry button functionality
-            document.getElementById('floating-inquiry-button').addEventListener('click', openInquiryModal);
-            document.getElementById('send-inquiry-whatsapp').addEventListener('click', sendInquiryViaWhatsApp);
-            document.getElementById('clear-inquiry-list').addEventListener('click', clearInquiryList);
-
-            updateInquiryCounter(); // Initialize counter on load
         });
     </script>
-
 </body>
 </html>
